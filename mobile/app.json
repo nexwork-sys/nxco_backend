@@ -1,0 +1,51 @@
+{
+  "expo": {
+    "name": "NXCO",
+    "slug": "nxco",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0F1F7A"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "NXCO needs your location to mark attendance and share your live position with Admin while you're checked in.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "NXCO needs your location to keep sharing your live position with Admin while you're checked in, even if the app is in the background.",
+        "NSCameraUsageDescription": "NXCO needs camera access so you can take a photo of a shop or attach a photo to an order.",
+        "NSPhotoLibraryUsageDescription": "NXCO needs photo library access so you can choose a shop photo or attach a document image to an order."
+      }
+    },
+    "android": {
+      "package": "com.nxco.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0F1F7A"
+      },
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "READ_MEDIA_IMAGES"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "apiBaseUrl": "https://nxco-backend-ei0v.onrender.com",
+      "eas": {
+        "projectId": "7ffa9504-fc76-480d-b232-168f1b95d2a3"
+      }
+    }
+  }
+}
