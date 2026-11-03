@@ -8,19 +8,25 @@ module.exports = async function ensureAdmin() {
 
         try { await User.collection.dropIndex('email_1'); console.log('[admin] Dropped stray index email_1.'); } catch (_) {}
 
-        const admin = await User.findOne({ employee_id: 'admin' });
+        const fullAdmin = async () => ({
+            name: 'Administrator',
+            mobile: '0000000000',
+            designation: 'Admin',
+            role: 'Admin',
+            active: true,
+            password_hash: await bcrypt.hash('admin123', 10),
+        });
+
+        const admin = await User.collection.findOne({ employee_id: 'admin' });
         if (!admin) {
-            await User.create({
-                employee_id: 'admin', name: 'Administrator', mobile: '0000000000',
-                designation: 'Admin', role: 'Admin',
-                password_hash: await bcrypt.hash('admin123', 10),
-            });
+            await User.create({ employee_id: 'admin', ...(await fullAdmin()) });
             console.log('[admin] Created default admin (admin / admin123).');
-        } else if (String(process.env.ADMIN_RESET).toLowerCase() === 'true') {
-            admin.role = 'Admin'; admin.active = true;
-            admin.password_hash = await bcrypt.hash('admin123', 10);
-            await admin.save();
-            console.log('[admin] ADMIN_RESET=true -> admin reset to admin123.');
+        } else {
+            const incomplete = !admin.name || !admin.mobile || !admin.designation || !admin.password_hash || admin.role !== 'Admin' || admin.active === false;
+            if (incomplete || String(process.env.ADMIN_RESET).toLowerCase() === 'true') {
+                await User.collection.updateOne({ employee_id: 'admin' }, { $set: { ...(await fullAdmin()), updatedAt: new Date() } });
+                console.log('[admin] Admin repaired/reset -> admin / admin123.');
+            }
         }
     } catch (e) {
         console.error('[admin] ensureAdmin failed:', e.message);
