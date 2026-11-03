@@ -42,7 +42,7 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "apiBaseUrl": "https://nxco-backend-ei0v.onrender.com",
+      "apiBaseUrl": "https://nxco-backend.onrender.com",
       "eas": {
         "projectId": "7ffa9504-fc76-480d-b232-168f1b95d2a3"
       }
